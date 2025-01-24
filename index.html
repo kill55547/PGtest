@@ -3,21 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Treasures of Aztec Slot</title>
+    <title>Treasures of Aztec</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
+    <div class="game-container">
         <h1>🎰 Treasures of Aztec 🎰</h1>
+
+        <!-- แสดงยอดเงิน -->
         <div id="balance">💰 เงิน: ฿1000</div>
-        <div class="slot-machine">
-            <div class="slot" id="slot1">🍒</div>
-            <div class="slot" id="slot2">🍒</div>
-            <div class="slot" id="slot3">🍒</div>
+
+        <!-- กระดานสล็อต 3x3 -->
+        <div class="slot-grid">
+            <div class="slot"></div>
+            <div class="slot"></div>
+            <div class="slot"></div>
+            <div class="slot"></div>
+            <div class="slot"></div>
+            <div class="slot"></div>
+            <div class="slot"></div>
+            <div class="slot"></div>
+            <div class="slot"></div>
         </div>
-        <button id="spinButton">🎲 หมุน</button>
+
+        <!-- ปุ่มควบคุม -->
+        <div class="buttons">
+            <button id="spinButton">🎲 หมุน</button>
+        </div>
+
         <div id="resultMessage"></div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
