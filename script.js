@@ -42,8 +42,7 @@ document.getElementById('spinButton').addEventListener('click', function () {
 
 // ฟังก์ชันฟรีสปิน
 function startFreeSpin() {
-    const winAmount = 1000;
-    balance += winAmount;
+    balance += 1000;
     let freeSpins = 10;
     const interval = setInterval(() => {
         if (freeSpins === 0) {
