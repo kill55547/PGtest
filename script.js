@@ -1,6 +1,6 @@
 let balance = 1000; //อธิบาย 1 = 100% 0.3 = 30% 0.8 = 80% เข้าใจบ่
-let winProbability = 0.4; // โอกาสชนะเริ่มต้น
-let freeSpinProbability = 0.2; // โอกาสเข้าโหมดฟรีสปิน
+let winProbability = 0.1; // โอกาสชนะเริ่มต้น
+let freeSpinProbability = 0.1; // โอกาสเข้าโหมดฟรีสปิน
 
 // แสดงยอดเงินเริ่มต้น
 document.getElementById('balance').textContent = `💰 เงิน: ฿${balance}`;
@@ -24,7 +24,7 @@ document.getElementById('spinButton').addEventListener('click', function () {
 
     // ตรวจสอบการชนะ
     if (Math.random() < winProbability) {
-        const winAmount = 500;
+        const winAmount = 250;
         balance += winAmount;
         document.getElementById('resultMessage').textContent = `🎉 ชนะ! รับรางวัล ฿${winAmount}`;
         document.getElementById('resultMessage').style.color = 'green';
@@ -42,6 +42,8 @@ document.getElementById('spinButton').addEventListener('click', function () {
 
 // ฟังก์ชันฟรีสปิน
 function startFreeSpin() {
+    const winAmount = 1000;
+    balance += winAmount;
     let freeSpins = 10;
     const interval = setInterval(() => {
         if (freeSpins === 0) {
