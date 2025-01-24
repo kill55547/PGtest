@@ -1,54 +1,69 @@
-// สัญลักษณ์และอัตราจ่ายเงิน
-const symbols = [
-    { emoji: '🍒', payout: 10 },
-    { emoji: '🍋', payout: 20 },
-    { emoji: '🍊', payout: 50 },
-    { emoji: '🍉', payout: 100 },
-    { emoji: '⭐', payout: 200 },
-    { emoji: '🍓', payout: 500 }
-];
+let balance = 1000;
+let winProbability = 0.3; // โอกาสชนะเริ่มต้น
+let freeSpinProbability = 0.2; // โอกาสเข้าโหมดฟรีสปิน
 
-let balance = 1000; // เริ่มต้นเงิน
-const spinCost = 100; // ค่าใช้จ่ายในการหมุน
+// แสดงยอดเงินเริ่มต้น
+document.getElementById('balance').textContent = `💰 เงิน: ฿${balance}`;
 
-// ฟังก์ชันหมุนสล็อต
+// ปุ่มหมุนสล็อต
 document.getElementById('spinButton').addEventListener('click', function () {
-    if (balance < spinCost) {
+    if (balance < 100) {
         alert("ยอดเงินไม่เพียงพอ!");
         return;
     }
 
-    balance -= spinCost;
+    balance -= 100;
     document.getElementById('balance').textContent = `💰 เงิน: ฿${balance}`;
 
+    const symbols = ['🍒', '🍋', '🍊', '🍉', '⭐', '🍓'];
     const slots = document.querySelectorAll('.slot');
-    const spinResult = [];
-
-    // หมุนสล็อต
     slots.forEach(slot => {
         const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
-        slot.textContent = randomSymbol.emoji;
-        spinResult.push(randomSymbol);
+        slot.textContent = randomSymbol;
     });
 
-    // ตรวจสอบผลลัพธ์
-    let totalWin = 0;
-    if (spinResult[0].emoji === spinResult[1].emoji && spinResult[1].emoji === spinResult[2].emoji) {
-        totalWin = spinResult[0].payout * 3; // ชนะ 3 ช่องตรงกัน
-    } else if (spinResult[0].emoji === spinResult[1].emoji || spinResult[1].emoji === spinResult[2].emoji) {
-        totalWin = spinResult[1].payout * 2; // ชนะ 2 ช่องติดกัน
-    }
-
-    // แสดงผลการชนะหรือแพ้
-    const resultMessage = document.getElementById('resultMessage');
-    if (totalWin > 0) {
-        balance += totalWin;
-        resultMessage.textContent = `🎉 ชนะ! รับรางวัล ฿${totalWin}`;
-        resultMessage.style.color = 'green';
+    // ตรวจสอบการชนะ
+    if (Math.random() < winProbability) {
+        const winAmount = 500;
+        balance += winAmount;
+        document.getElementById('resultMessage').textContent = `🎉 ชนะ! รับรางวัล ฿${winAmount}`;
+        document.getElementById('resultMessage').style.color = 'green';
+    } else if (Math.random() < freeSpinProbability) {
+        document.getElementById('resultMessage').textContent = `🎉 เข้าฟรีสปิน!`;
+        document.getElementById('resultMessage').style.color = 'blue';
+        startFreeSpin();
     } else {
-        resultMessage.textContent = `😢 ไม่ชนะ ลองใหม่อีกครั้ง!`;
-        resultMessage.style.color = 'red';
+        document.getElementById('resultMessage').textContent = `😢 ไม่ชนะ ลองใหม่อีกครั้ง!`;
+        document.getElementById('resultMessage').style.color = 'red';
     }
 
     document.getElementById('balance').textContent = `💰 เงิน: ฿${balance}`;
 });
+
+// ฟังก์ชันฟรีสปิน
+function startFreeSpin() {
+    let freeSpins = 5;
+    const interval = setInterval(() => {
+        if (freeSpins === 0) {
+            clearInterval(interval);
+            document.getElementById('resultMessage').textContent = `🎉 จบโหมดฟรีสปิน!`;
+            return;
+        }
+        freeSpins--;
+        document.getElementById('resultMessage').textContent = `🎉 ฟรีสปินเหลือ: ${freeSpins}`;
+        // หมุนสล็อตในโหมดฟรีสปิน
+        const symbols = ['🍒', '🍋', '🍊', '🍉', '⭐', '🍓'];
+        const slots = document.querySelectorAll('.slot');
+        slots.forEach(slot => {
+            const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+            slot.textContent = randomSymbol;
+        });
+
+        if (Math.random() < winProbability) {
+            const winAmount = 200;
+            balance += winAmount;
+        }
+
+        document.getElementById('balance').textContent = `💰 เงิน: ฿${balance}`;
+    }, 1000);
+}
